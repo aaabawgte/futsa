@@ -6,6 +6,8 @@ const saveMatchButton = document.getElementById('save-match-btn');
 const saveLineupButton = document.getElementById('save-lineup-btn');
 const matchDateInput = document.getElementById('match-date');
 const matchLocationInput = document.getElementById('match-location');
+const playerNameInput = document.getElementById('player-name');
+const addPlayerButton = document.getElementById('add-player-btn');
 
 let draggedPlayer = null;
 let currentMatchId = null;
@@ -131,12 +133,37 @@ async function saveLineup() {
   }
 }
 
+async function addPlayer() {
+  const name = playerNameInput.value.trim();
+
+  if (!name) {
+    alert('Unesi ime igrača.');
+    return;
+  }
+
+  try {
+    await createPlayer({ name });
+
+    playerNameInput.value = '';
+    await loadPlayers();
+
+    alert('Igrač dodan.');
+  } catch (error) {
+    console.error(error);
+    alert('Greška kod dodavanja igrača.');
+  }
+}
+
 if (saveMatchButton) {
   saveMatchButton.addEventListener('click', saveMatch);
 }
 
 if (saveLineupButton) {
   saveLineupButton.addEventListener('click', saveLineup);
+}
+
+if (addPlayerButton) {
+  addPlayerButton.addEventListener('click', addPlayer);
 }
 
 setupDropzones();
