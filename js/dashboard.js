@@ -1,8 +1,3 @@
-const STORAGE_KEYS = {
-  match: 'futsa_next_match',
-  lineup: 'futsa_lineup'
-};
-
 const fallbackMatch = {
   date: null,
   location: 'Još nije uneseno',
@@ -24,23 +19,6 @@ const team1CountElement = document.getElementById('team1-count');
 const team2CountElement = document.getElementById('team2-count');
 
 let countdownInterval = null;
-
-function getStoredData() {
-  const savedMatch = localStorage.getItem(STORAGE_KEYS.match);
-  const savedLineup = localStorage.getItem(STORAGE_KEYS.lineup);
-
-  const match = savedMatch ? JSON.parse(savedMatch) : fallbackMatch;
-  const lineup = savedLineup ? JSON.parse(savedLineup) : null;
-
-  return {
-    date: match.date,
-    location: match.location,
-    teams: {
-      team1: lineup?.team1 || [],
-      team2: lineup?.team2 || []
-    }
-  };
-}
 
 function formatMatchDate(dateString) {
   if (!dateString) {
@@ -111,17 +89,15 @@ function renderTeam(container, players) {
   });
 }
 
-function renderDashboard() {
-  const nextMatch = getStoredData();
-
-  locationElement.textContent = nextMatch.location;
+function renderDashboardData(nextMatch) {
+  locationElement.textContent = nextMatch.location || fallbackMatch.location;
   matchTimeElement.textContent = formatMatchDate(nextMatch.date);
 
-  renderTeam(team1Element, nextMatch.teams.team1);
-  renderTeam(team2Element, nextMatch.teams.team2);
+  renderTeam(team1Element, nextMatch.teams?.team1 || []);
+  renderTeam(team2Element, nextMatch.teams?.team2 || []);
 
-  team1CountElement.textContent = `${nextMatch.teams.team1.length} igrača`;
-  team2CountElement.textContent = `${nextMatch.teams.team2.length} igrača`;
+  team1CountElement.textContent = `${nextMatch.teams?.team1?.length || 0} igrača`;
+  team2CountElement.textContent = `${nextMatch.teams?.team2?.length || 0} igrača`;
 
   updateCountdown(nextMatch.date);
 
@@ -132,6 +108,16 @@ function renderDashboard() {
   countdownInterval = setInterval(() => {
     updateCountdown(nextMatch.date);
   }, 1000);
+}
+
+async function renderDashboard() {
+  try {
+    const nextMatch = await getNextMatch();
+    renderDashboardData(nextMatch);
+  } catch (error) {
+    console.error(error);
+    renderDashboardData(fallbackMatch);
+  }
 }
 
 renderDashboard();
