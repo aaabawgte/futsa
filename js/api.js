@@ -44,3 +44,10 @@ async function createLineup(lineupData) {
     body: JSON.stringify(lineupData)
   });
 }
+
+async function deletePlayer(playerId) {
+  return apiRequest('/players/delete', {
+    method: 'POST',
+    body: JSON.stringify({ playerId })
+  });
+}

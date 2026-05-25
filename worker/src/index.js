@@ -44,6 +44,27 @@ async function createPlayer(env, body) {
   });
 }
 
+async function deletePlayer(env, body) {
+  const { playerId } = body;
+
+  if (!playerId) {
+    return json({ error: 'Player ID is required' }, 400);
+  }
+
+  await env.DB
+    .prepare(`
+      UPDATE players
+      SET is_active = 0
+      WHERE id = ?
+    `)
+    .bind(playerId)
+    .run();
+
+  return json({
+    success: true
+  });
+}
+
 async function createMatch(env, body) {
   const { date, location } = body;
 
@@ -190,6 +211,11 @@ export default {
     if (url.pathname === '/players' && method === 'POST') {
       const body = await request.json();
       return createPlayer(env, body);
+    }
+
+    if (url.pathname === '/players/delete' && method === 'POST') {
+      const body = await request.json();
+      return deletePlayer(env, body);
     }
 
     if (url.pathname === '/matches' && method === 'POST') {

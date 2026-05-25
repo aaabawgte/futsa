@@ -8,6 +8,7 @@ const matchDateInput = document.getElementById('match-date');
 const matchLocationInput = document.getElementById('match-location');
 const playerNameInput = document.getElementById('player-name');
 const addPlayerButton = document.getElementById('add-player-btn');
+const deletePlayerZone = document.getElementById('delete-player-zone');
 
 let draggedPlayer = null;
 let currentMatchId = null;
@@ -52,6 +53,52 @@ function setupDropzones() {
 
       zone.appendChild(draggedPlayer);
     });
+  });
+}
+
+function setupDeleteZone() {
+  if (!deletePlayerZone) {
+    return;
+  }
+
+  deletePlayerZone.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    deletePlayerZone.classList.add('drag-over');
+  });
+
+  deletePlayerZone.addEventListener('dragleave', () => {
+    deletePlayerZone.classList.remove('drag-over');
+  });
+
+  deletePlayerZone.addEventListener('drop', async (event) => {
+    event.preventDefault();
+    deletePlayerZone.classList.remove('drag-over');
+
+    if (!draggedPlayer) {
+      return;
+    }
+
+    const playerId = Number(draggedPlayer.dataset.playerId);
+    const playerName = draggedPlayer.textContent.trim();
+
+    const confirmed = confirm(`Obrisati igrača "${playerName}"?`);
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await deletePlayer(playerId);
+      draggedPlayer.remove();
+      draggedPlayer = null;
+
+      await loadPlayers();
+
+      alert('Igrač obrisan.');
+    } catch (error) {
+      console.error(error);
+      alert('Greška kod brisanja igrača.');
+    }
   });
 }
 
@@ -167,4 +214,5 @@ if (addPlayerButton) {
 }
 
 setupDropzones();
+setupDeleteZone();
 loadPlayers();
