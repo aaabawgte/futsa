@@ -4,6 +4,56 @@
   box-sizing: border-box;
 }
 
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(0, 255, 174, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 26px rgba(0, 255, 174, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* ADMIN */
 
 .admin-header {
@@ -41,6 +91,16 @@
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.35),
     0 0 30px rgba(0, 255, 174, 0.04);
+  animation: cardEnter 0.55s var(--ease-soft) both;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.42),
+    0 0 32px rgba(0, 255, 174, 0.055);
 }
 
 .admin-form {
@@ -94,7 +154,7 @@
   font-size: 0.92rem;
   cursor: grab;
   user-select: none;
-  transition: 0.2s ease;
+  transition: transform 0.2s var(--ease-out), background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
 .player-chip:hover {
@@ -106,6 +166,7 @@
 .player-chip.dragging {
   opacity: 0.45;
   cursor: grabbing;
+  transform: scale(0.96);
 }
 
 .builder-grid {
@@ -146,12 +207,14 @@
   padding: 14px;
   border-radius: 20px;
   border: 1px dashed rgba(255, 255, 255, 0.14);
-  transition: 0.2s ease;
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s var(--ease-out), box-shadow 0.22s ease;
 }
 
 .team-dropzone.drag-over {
   border-color: rgba(0, 255, 174, 0.55);
   background: rgba(0, 255, 174, 0.06);
+  transform: scale(1.01);
+  box-shadow: inset 0 0 24px rgba(0, 255, 174, 0.05);
 }
 
 .team-dropzone .player-chip {
@@ -175,13 +238,14 @@
   color: #ffb4b4;
   text-align: center;
   font-size: 0.92rem;
-  transition: 0.2s ease;
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s var(--ease-out), box-shadow 0.22s ease;
 }
 
 .delete-player-zone.drag-over {
   background: rgba(255, 123, 123, 0.12);
   border-color: rgba(255, 123, 123, 0.65);
   box-shadow: 0 0 24px rgba(255, 123, 123, 0.12);
+  transform: scale(1.01);
 }
 
 .section-divider {
@@ -238,6 +302,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+  animation: pageFadeIn 0.55s var(--ease-out) both;
 }
 
 .background-glow {
@@ -283,6 +348,7 @@ body {
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.45),
     0 0 30px rgba(0, 255, 174, 0.06);
+  animation: cardEnter 0.6s var(--ease-soft) both;
 }
 
 .logo-section {
@@ -302,6 +368,12 @@ body {
   background: linear-gradient(135deg, #00ffae, #00c3ff);
   box-shadow:
     0 10px 30px rgba(0, 255, 174, 0.25);
+  animation: softPulse 3.5s ease-in-out infinite;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.logo-badge:hover {
+  transform: rotate(-4deg) scale(1.04);
 }
 
 .logo-section h1 {
@@ -359,7 +431,12 @@ button {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: transform 0.18s var(--ease-out), box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+button:active,
+.ghost-link:active {
+  transform: scale(0.97);
 }
 
 .primary-btn {
@@ -442,11 +519,12 @@ button {
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: 0.2s ease;
+  transition: transform 0.18s var(--ease-out), background 0.2s ease, border-color 0.2s ease;
 }
 
 .ghost-link:hover {
   background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
 }
 
 .next-match-card {
@@ -459,6 +537,16 @@ button {
     0 20px 50px rgba(0, 0, 0, 0.45),
     0 0 30px rgba(0, 255, 174, 0.05);
   margin-bottom: 32px;
+  animation: cardEnter 0.55s var(--ease-soft) both;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s ease;
+}
+
+.next-match-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.5),
+    0 0 34px rgba(0, 255, 174, 0.07);
 }
 
 .section-label {
@@ -485,6 +573,13 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.06);
   text-align: center;
   min-width: 0;
+  transition: transform 0.22s var(--ease-out), background 0.22s ease, border-color 0.22s ease;
+}
+
+.countdown-box:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.065);
+  border-color: rgba(0, 255, 174, 0.16);
 }
 
 .countdown-box strong {
@@ -543,6 +638,16 @@ button {
   backdrop-filter: blur(20px);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.35);
+  animation: cardEnter 0.55s var(--ease-soft) both;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(0, 195, 255, 0.045);
 }
 
 .team-card-header {
@@ -572,6 +677,13 @@ button {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s var(--ease-out), background 0.2s ease, border-color 0.2s ease;
+}
+
+.player-card:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.065);
+  border-color: rgba(0, 255, 174, 0.12);
 }
 
 .empty-state {
