@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8787';
+const API_URL = 'https://futsa-worker.ww7rfpf4mp.workers.dev';
 
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_URL}${endpoint}`, {
