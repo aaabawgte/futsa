@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futsa Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+
+  <div class="background-glow glow-1"></div>
+  <div class="background-glow glow-2"></div>
+
+  <main class="dashboard-shell">
+
+    <header class="app-header admin-header">
+      <div>
+        <span class="eyebrow">Admin panel</span>
+        <h1>Upravljanje terminima</h1>
+      </div>
+
+      <div class="header-actions">
+        <a class="ghost-link" href="dashboard.html">Dashboard</a>
+        <button class="logout-btn" onclick="logout()">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <section class="admin-grid">
+
+      <article class="admin-card">
+        <div class="section-heading">
+          <span class="section-label">Novi termin</span>
+          <h2>Dodavanje termina</h2>
+        </div>
+
+        <div class="admin-form">
+          <input id="match-date" type="datetime-local">
+          <input id="match-location" type="text" placeholder="Lokacija termina">
+
+          <button class="primary-btn" id="save-match-btn">
+            Spremi termin
+          </button>
+        </div>
+      </article>
+
+      <article class="admin-card lineup-builder">
+        <div class="section-heading">
+          <span class="section-label">Postava</span>
+          <h2>Slaganje ekipa</h2>
+        </div>
+
+        <div class="players-pool" id="players-pool">
+          <div class="player-chip" draggable="true">Bruno</div>
+          <div class="player-chip" draggable="true">Matej</div>
+          <div class="player-chip" draggable="true">Luka</div>
+          <div class="player-chip" draggable="true">Ivan</div>
+          <div class="player-chip" draggable="true">Karlo</div>
+          <div class="player-chip" draggable="true">Filip</div>
+          <div class="player-chip" draggable="true">Marko</div>
+          <div class="player-chip" draggable="true">Petar</div>
+        </div>
+
+        <div class="builder-grid">
+
+          <div class="dropzone-wrapper">
+            <div class="dropzone-header">
+              <h3>Ekipa 1</h3>
+              <span>Drag & drop</span>
+            </div>
+
+            <div class="team-dropzone" id="team1-dropzone"></div>
+          </div>
+
+          <div class="dropzone-wrapper">
+            <div class="dropzone-header">
+              <h3>Ekipa 2</h3>
+              <span>Drag & drop</span>
+            </div>
+
+            <div class="team-dropzone" id="team2-dropzone"></div>
+          </div>
+
+        </div>
+
+        <button class="primary-btn full-width-btn" id="save-lineup-btn">
+          Spremi postavu
+        </button>
+      </article>
+
+    </section>
+
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

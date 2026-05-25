@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futsa Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+
+  <div class="background-glow glow-1"></div>
+  <div class="background-glow glow-2"></div>
+
+  <main class="dashboard-shell">
+
+    <header class="app-header">
+      <div>
+        <span class="eyebrow">Futsa</span>
+        <h1>Nedjeljni termin</h1>
+      </div>
+
+      <a class="ghost-link" href="index.html">Izlaz</a>
+    </header>
+
+    <section class="next-match-card">
+      <div class="section-label">Idući termin</div>
+
+      <div class="countdown-grid" id="countdown">
+        <div class="countdown-box">
+          <strong id="days">--</strong>
+          <span>dana</span>
+        </div>
+        <div class="countdown-box">
+          <strong id="hours">--</strong>
+          <span>sati</span>
+        </div>
+        <div class="countdown-box">
+          <strong id="minutes">--</strong>
+          <span>min</span>
+        </div>
+        <div class="countdown-box">
+          <strong id="seconds">--</strong>
+          <span>sek</span>
+        </div>
+      </div>
+
+      <div class="match-meta">
+        <div>
+          <span>Lokacija</span>
+          <strong id="location">Još nije uneseno</strong>
+        </div>
+        <div>
+          <span>Vrijeme</span>
+          <strong id="match-time">Čeka se termin</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="lineup-section">
+      <div class="section-heading">
+        <span class="section-label">Postava</span>
+        <h2>Ekipe za idući termin</h2>
+      </div>
+
+      <div class="teams-grid">
+        <article class="team-card">
+          <div class="team-card-header">
+            <h3>Ekipa 1</h3>
+            <span id="team1-count">0 igrača</span>
+          </div>
+
+          <div class="players-list" id="team1">
+            <p class="empty-state">Postava još nije složena.</p>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <div class="team-card-header">
+            <h3>Ekipa 2</h3>
+            <span id="team2-count">0 igrača</span>
+          </div>
+
+          <div class="players-list" id="team2">
+            <p class="empty-state">Postava još nije složena.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

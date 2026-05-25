@@ -1,0 +1,9 @@
+
+name = "futsa-worker"
+main = "src/index.js"
+compatibility_date = "2026-05-25"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "futsa-db"
+database_id = "fa225091-1f9a-4c95-90b3-df601505268a"
